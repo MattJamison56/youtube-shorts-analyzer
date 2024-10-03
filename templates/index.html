@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Keyword Analyzer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .thumbnail {
+            width: 120px;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+        .hook-text {
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>YouTube Keyword Analyzer</h1>
+    <form method="post" class="my-4">
+        <div class="form-group">
+            <input type="text" name="keyword" class="form-control" placeholder="Enter keyword" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    {% if videos %}
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Thumbnail</th>
+                <th>Title</th>
+                <th>Channel</th>
+                <th>Views</th>
+                <th>Likes</th>
+                <th>Comments</th>
+                <th>Hook</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for video in videos %}
+            <tr>
+                <td><img src="{{ video.thumbnail }}" class="thumbnail"></td>
+                <td><a href="https://www.youtube.com/watch?v={{ video.video_id }}" target="_blank">{{ video.title }}</a></td>
+                <td>{{ video.channel_title }}</td>
+                <td>{{ "{:,}".format(video.views) }}</td>
+                <td>{{ "{:,}".format(video.likes) }}</td>
+                <td>{{ "{:,}".format(video.comments) }}</td>
+                <td class="hook-text">{{ video.hook }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+</body>
+</html>
